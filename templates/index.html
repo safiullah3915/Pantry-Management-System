@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="pantry-container">
+    <h2>Your Pantry Items</h2>
+    <ul>
+        {% for item in pantry %}
+        <li>
+            <form action="{{ url_for('update_item', item_id=loop.index0) }}" method="POST">
+                <input type="text" name="item_name" value="{{ item['item_name'] }}" readonly>
+                <input type="number" name="quantity" value="{{ item['quantity'] }}">
+                <button type="submit">Update</button>
+                <button type="submit" formaction="{{ url_for('delete_item', item_id=loop.index0) }}">Remove</button>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <h2>Add New Item</h2>
+    <form action="{{ url_for('add_item') }}" method="POST">
+        <input type="text" name="item_name" placeholder="Item Name" required>
+        <input type="number" name="quantity" placeholder="Quantity" required>
+        <button type="submit">Add Item</button>
+    </form>
+</div>
+{% endblock %}
